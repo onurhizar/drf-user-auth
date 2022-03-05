@@ -5,6 +5,10 @@ from rest_framework import status
 from django.contrib.auth.models import User
 from .serializers import UserListSerializer, UserRegisterSerializer
 
+# for custom auth token obtainer
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+from .customAuth import authTokenName
 
 class TestView(APIView):
     def get(self, request):
@@ -26,4 +30,23 @@ class UsersView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class CustomAuthTokenObtainView(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(
+            data=request.data,
+            context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+
+        content = {
+            'token': token.key,
+            'user_id': user.pk,
+            'username': user.username
+        }
+
+        cookieSeconds = 60
+        header = {'Set-Cookie': f'{authTokenName}={token.key}; Max-Age={cookieSeconds}; HttpOnly'}
+        return Response(content, headers=header)
 

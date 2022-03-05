@@ -29,4 +29,11 @@ A playground for DRF testing and practice purposes.
 * ADD obtain_auth_token from rest_framework.authtoken.views @ core/urls.py
 * ADD gettoken/ route to obtain token with credentials @ core/urls.py
 * INFO now you can get token and cookie via api/gettoken/ route
-* TODO get Set-Cookie header from gettoken route with CustomAuthToken?
+* TODO get Set-Cookie header from gettoken route with CustomAuthToken? [DONE @ v0.0.4]
+
+## v0.0.4
+* ADD custom auth token inherited from ObtainAuthToken class @ core/views.py
+* EDIT core/urls.py with CustomAuthTokenObtainView for gettoken/ route
+* INFO now server sends back the id and username as well as the token
+* INFO now server adds Set-Token header to the response (It was a todo from0.0.3)
+
