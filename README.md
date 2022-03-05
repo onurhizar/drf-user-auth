@@ -22,3 +22,11 @@ A playground for DRF testing and practice purposes.
 * ADD serializer.errors to send the error messages back with status codes
 * ADD api/users/ route for GET and POST methods
 
+## v0.0.3
+* ADD 'rest_framework.authtoken' @ server/settings.py installed apps
+* ADD customAuth.py for enhanced version of token auth with cookies support
+* ADD 'REST_FRAMEWORK' dictionary with custom authenticator
+* ADD obtain_auth_token from rest_framework.authtoken.views @ core/urls.py
+* ADD gettoken/ route to obtain token with credentials @ core/urls.py
+* INFO now you can get token and cookie via api/gettoken/ route
+* TODO get Set-Cookie header from gettoken route with CustomAuthToken?
