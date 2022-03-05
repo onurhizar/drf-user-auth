@@ -10,6 +10,10 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from .customAuth import authTokenName
 
+# for protected routes
+from rest_framework.permissions import IsAuthenticated
+
+
 class TestView(APIView):
     def get(self, request):
         content = {"msg":"hello"}
@@ -50,3 +54,11 @@ class CustomAuthTokenObtainView(ObtainAuthToken):
         header = {'Set-Cookie': f'{authTokenName}={token.key}; Max-Age={cookieSeconds}; HttpOnly'}
         return Response(content, headers=header)
 
+
+class ProtectedRouteTestView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        theUser = request.user # authenticated user as a User model
+        content = {"msg": f"welcome {theUser.username} to the protected area"}
+        return Response(content)

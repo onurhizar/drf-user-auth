@@ -35,5 +35,14 @@ A playground for DRF testing and practice purposes.
 * ADD custom auth token inherited from ObtainAuthToken class @ core/views.py
 * EDIT core/urls.py with CustomAuthTokenObtainView for gettoken/ route
 * INFO now server sends back the id and username as well as the token
-* INFO now server adds Set-Token header to the response (It was a todo from0.0.3)
+* INFO now server adds Set-Token header to the response (It was a todo from 0.0.3)
+
+## v0.0.5
+* ADD protected route with token @ core/views.py and core/urls.py
+* INFO /api/protected-test/ route for testing the auth & permissions
+to test protected route with cookie via HTTPie:
+`http http://127.0.0.1:8000/api/protected-test/ Cookie:"auth_token=f619b9ec3759a05a80532654103080527e19c3ca"`
+or
+`http http://127.0.0.1:8000/api/protected-test/ 'Authorization: Token f619b9ec3759a05a80532654103080527e19c3ca'`
+
 
