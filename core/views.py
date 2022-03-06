@@ -35,6 +35,7 @@ class UsersView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+#custom auth token obtain view with set-cookie header support
 class CustomAuthTokenObtainView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(
@@ -50,8 +51,8 @@ class CustomAuthTokenObtainView(ObtainAuthToken):
             'username': user.username
         }
 
-        cookieSeconds = 60
-        header = {'Set-Cookie': f'{authTokenName}={token.key}; Max-Age={cookieSeconds}; HttpOnly'}
+        cookieMinutes = 1 
+        header = {'Set-Cookie': f'{authTokenName}={token.key}; Max-Age={cookieMinutes*60}; Path=/; HttpOnly'}
         return Response(content, headers=header)
 
 
@@ -62,3 +63,16 @@ class ProtectedRouteTestView(APIView):
         theUser = request.user # authenticated user as a User model
         content = {"msg": f"welcome {theUser.username} to the protected area"}
         return Response(content)
+
+
+# test view for getting cookie of auth_token
+class SetCookieTestView(APIView):
+    def get(self, request):
+        cookieMinutes = 5
+        cookieKey = 'auth_token'
+        cookieValue = 'f619b9ec3759a05a80532654103080527e19c3ca'
+        header = {'Set-Cookie': f'{cookieKey}={cookieValue}; Max-Age={cookieMinutes*60}; Path=/; HttpOnly'}
+        content = {'msg':'cookie has been set'}
+        return Response(content, headers=header)
+
+

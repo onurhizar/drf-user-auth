@@ -4,6 +4,17 @@ A playground for DRF testing and practice purposes.
 
 ---
 
+# Routes
+
+`/admin/`
+`/api/test/`
+`/api/users/`
+`/api/gettoken/`
+`/api/protected-test/`
+`/api/setcookie-test/`
+
+---
+
 # TODO
 * StatusMessage model 
 * Relationship that model with User model (many to one)
@@ -61,5 +72,11 @@ or
 ## v0.0.6
 * INFO corsheaders has been installed `pip install django-cors-headers`
 * ADD corsheaders @ server/settings.py and configured for 8080 port
+
+
+## v0.0.7
+* ADD SetCookieTestView @ core/views.py for test purposes
+* ADD setcookie-test/ route 
+* EDIT cookie value of CustomAuthTokenObtainView with `Path=/`
 
 
